@@ -34,7 +34,7 @@ cat("============================================================\n")
 cat("Step 1: Reading data...\n")
 
 # ---------- 1. 读取数据 ----------
-df <- read.delim("../data/微生物OUT.xls", sep = "\t", header = TRUE, check.names = FALSE)
+df <- read.delim("../data/microbial_OTU_table.xls", sep = "\t", header = TRUE, check.names = FALSE)
 data_cols <- grep("^W\\d+_\\d+$", names(df), value = TRUE)
 cat(sprintf("  Samples: %d\n", length(data_cols)))
 

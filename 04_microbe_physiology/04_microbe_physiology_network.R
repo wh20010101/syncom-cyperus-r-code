@@ -34,20 +34,20 @@ cat("============================================================\n")
 cat("Step 1: Reading data...\n")
 
 # 微生物
-df <- read.delim("../data/微生物OUT.xls", sep = "\t", header = TRUE, check.names = FALSE)
+df <- read.delim("../data/microbial_OTU_table.xls", sep = "\t", header = TRUE, check.names = FALSE)
 data_cols <- grep("^W[0-9]+_[0-9]+$", names(df), value = TRUE)
 df$genus_clean <- gsub("^g__", "", df$genus)
 genus_abund <- aggregate(df[, data_cols], by = list(genus = df$genus_clean), FUN = sum)
 rownames(genus_abund) <- genus_abund$genus; genus_abund$genus <- NULL
 
 # 生理指标
-phys_raw <- read_excel("生理指标.xlsx")
+phys_raw <- read_excel("physiology.xlsx")
 phys_mat <- as.data.frame(phys_raw)
 rownames(phys_mat) <- phys_mat$Sample
 phys_mat$Sample <- NULL
 
 # 分组
-group_raw <- read_excel("分组信息.xlsx")
+group_raw <- read_excel("groups.xlsx")
 stopifnot(all(c("Sample", "Group") %in% names(group_raw)))
 
 expected_groups <- c(

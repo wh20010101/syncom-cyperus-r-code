@@ -32,7 +32,7 @@ cat("============================================================\n")
 
 # ---------- 1. 预处理 ----------
 cat("Step 1: Reading data...\n")
-df <- read.delim("../data/微生物OUT.xls", sep = "\t", header = TRUE, check.names = FALSE)
+df <- read.delim("../data/microbial_OTU_table.xls", sep = "\t", header = TRUE, check.names = FALSE)
 data_cols <- grep("^W[0-9]+_[0-9]+$", names(df), value = TRUE)
 df$genus_clean <- gsub("^g__", "", df$genus)
 genus_abund <- aggregate(df[, data_cols], by = list(genus = df$genus_clean), FUN = sum)

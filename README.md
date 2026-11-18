@@ -10,18 +10,18 @@
 ├── README.md
 ├── LICENSE
 ├── .gitignore
-├── 组学与生理的相关性分析/                 # 模块 1：Mantel 检验
-│   └── 相关性.R
-├── 代谢物与生理指标相关性网络/             # 模块 2
-│   └── SS_NSS_metabolite_correlation.R
-├── 微生物与代谢物/                         # 模块 3
-│   └── microbe_metabolite_correlation.R
-├── 微生物与生理指标相关性网络/             # 模块 4
-│   └── microbe_physiology_correlation.R
-├── 微生物共现网络分析/                     # 模块 5
+├── 01_mantel/                 # 模块 1：Mantel 检验
+│   └── 01_mantel.R
+├── 02_metabolite_physiology/             # 模块 2
+│   └── 02_metabolite_physiology_network.R
+├── 03_microbe_metabolite/                         # 模块 3
+│   └── 03_microbe_metabolite_network.R
+├── 04_microbe_physiology/             # 模块 4
+│   └── 04_microbe_physiology_network.R
+├── 05_cooccurrence_rf/                     # 模块 5
 │   ├── cooccurrence_network.R
 │   └── random_forest.R
-└── 析因分析/                               # 模块 6：双因素方差分析
+└── 06_factorial_anova/                               # 模块 6：双因素方差分析
     └── 06_factorial_anova.R
 ```
 
@@ -29,12 +29,12 @@
 
 | 顺序 | 模块 | 脚本 | 主要输入 |
 |---|---|---|---|
-| ① | 组学与生理的相关性分析（Mantel） | `相关性.R` | `灭菌/非灭菌` 的微生物、代谢物、生理指标 xlsx |
-| ② | 代谢物—生理指标相关性网络 | `SS_NSS_metabolite_correlation.R` | `代谢物_SS/NSS筛选结果.csv` + 模块 1 的生理指标 xlsx |
-| ③ | 微生物—代谢物相关性网络 | `microbe_metabolite_correlation.R` | `data/微生物OUT.xls` + 模块 2 的代谢物 CSV |
-| ④ | 微生物—生理指标相关性网络 | `microbe_physiology_correlation.R` | `data/微生物OUT.xls` + `生理指标.xlsx`、`分组信息.xlsx` |
-| ⑤ | 微生物共现网络与随机森林 | `cooccurrence_network.R`、`random_forest.R` | `data/微生物OUT.xls` |
-| ⑥ | 析因分析 | `06_factorial_anova.R` | `所有数据.xlsx` |
+| ① | 01_mantel（Mantel） | `01_mantel.R` | `SS/NSS` 的微生物、代谢物、生理指标 xlsx |
+| ② | 代谢物—生理指标相关性网络 | `02_metabolite_physiology_network.R` | `metabolite_SS.csv / metabolite_NSS.csv` + 模块 1 的生理指标 xlsx |
+| ③ | 微生物—代谢物相关性网络 | `03_microbe_metabolite_network.R` | `data/microbial_OTU_table.xls` + 模块 2 的代谢物 CSV |
+| ④ | 微生物—生理指标相关性网络 | `04_microbe_physiology_network.R` | `data/microbial_OTU_table.xls` + `physiology.xlsx`、`groups.xlsx` |
+| ⑤ | 微生物共现网络与随机森林 | `cooccurrence_network.R`、`random_forest.R` | `data/microbial_OTU_table.xls` |
+| ⑥ | 06_factorial_anova | `06_factorial_anova.R` | `factorial_traits.xlsx` |
 
 > 模块 5：4 个处理组（CK、S、SC1、SC5），SS 与 NSS 合并，每组 6 个样本；共现网络采用 `|r| > 0.7`、BH-FDR `P < 0.05`、前 100 属；随机森林采用前 30 属、`mtry = 6`、`ntree = 2000`、`set.seed(42)`。
 >
@@ -49,15 +49,15 @@
 
 | 文件 | 放置位置 | 说明 |
 |---|---|---|
-| 微生物丰度表 | `data/微生物OUT.xls` | 制表符分隔；行 = OTU/种及分类注释，列 = 样本（`W*_*`）；脚本按 `genus` 聚合到属 |
-| 代谢物筛选表 | `代谢物与生理指标相关性网络/代谢物_SS筛选结果.csv`、`代谢物_NSS筛选结果.csv` | 行 = 代谢物，列 = 注释信息 + 样本丰度（`W*_*`） |
-| 生理指标（模块 1） | `组学与生理的相关性分析/灭菌指标.xlsx`、`非灭菌指标.xlsx` | 第一列 `Sample`，其余列 = 生理指标 |
-| 微生物/代谢物（模块 1） | `组学与生理的相关性分析/灭菌微生物.xlsx`、`灭菌代谢物.xlsx`、`非灭菌微生物.xlsx`、`非灭菌代谢物.xlsx` | 第一列 `Sample`，其余列 = 特征 |
-| 生理指标（模块 4） | `微生物与生理指标相关性网络/生理指标.xlsx` | 第一列 `Sample`，其余列 = 生理指标 |
-| 分组信息（模块 4） | `微生物与生理指标相关性网络/分组信息.xlsx` | 至少包含 `Sample`、`Group` 两列；请使用 `SS-CK` / `SS-S` / `SS-SC1` / `SS-SC5` 与对应 `NSS-...` 的标准写法 |
-| 析因分析数据 | `析因分析/所有数据.xlsx` | `Sheet1`：42 行 × 39 列，Sample + 38 个指标 |
+| 微生物丰度表 | `data/microbial_OTU_table.xls` | 制表符分隔；行 = OTU/种及分类注释，列 = 样本（`W*_*`）；脚本按 `genus` 聚合到属 |
+| 代谢物筛选表 | `02_metabolite_physiology/metabolite_SS.csv`、`metabolite_NSS.csv` | 行 = 代谢物，列 = 注释信息 + 样本丰度（`W*_*`） |
+| 生理指标（模块 1） | `01_mantel/SS_physiology.xlsx`、`NSS_physiology.xlsx` | 第一列 `Sample`，其余列 = 生理指标 |
+| 微生物/代谢物（模块 1） | `01_mantel/SS_microbiome.xlsx`、`SS_metabolome.xlsx`、`NSS_microbiome.xlsx`、`NSS_metabolome.xlsx` | 第一列 `Sample`，其余列 = 特征 |
+| 生理指标（模块 4） | `04_microbe_physiology/physiology.xlsx` | 第一列 `Sample`，其余列 = 生理指标 |
+| 分组信息（模块 4） | `04_microbe_physiology/groups.xlsx` | 至少包含 `Sample`、`Group` 两列；请使用 `SS-CK` / `SS-S` / `SS-SC1` / `SS-SC5` 与对应 `NSS-...` 的标准写法 |
+| 06_factorial_anova数据 | `06_factorial_anova/factorial_traits.xlsx` | `Sheet1`：42 行 × 39 列，Sample + 38 个指标 |
 
-> 模块 6 使用全模型（42 个观测，误差 df = 28）：输出三效应 F/P/偏 η²/95% CI、Levene 与 Shapiro 检验，以及每个土壤背景内 7 个处理的 Tukey HSD（全模型 MSE，df = 28）和 Piepho 显著性字母；输出 `output/1_三效应_F_P_偏eta2_CI.xlsx` 与 `output/2_各处理均值与字母.xlsx`。原始数据不包含在仓库中。
+> 模块 6 使用全模型（42 个观测，误差 df = 28）：输出三效应 F/P/偏 η²/95% CI、Levene 与 Shapiro 检验，以及每个土壤背景内 7 个处理的 Tukey HSD（全模型 MSE，df = 28）和 Piepho 显著性字母；输出 `output/1_ANOVA_effects.xlsx` 与 `output/2_treatment_means_letters.xlsx`。原始数据不包含在仓库中。
 
 ## 运行方式
 
@@ -65,7 +65,7 @@
 - **命令行**（在仓库根目录）：
 
 ```bash
-Rscript "组学与生理的相关性分析/相关性.R"
+Rscript "01_mantel/01_mantel.R"
 ```
 
 大多数脚本开头有“自动切换到脚本所在目录”的路径适配代码；它只解决工作目录问题，**不代表数据已包含在仓库中**。数据缺失时脚本会报“文件不存在”，请先按上表放置数据。
@@ -114,24 +114,14 @@ if (!requireNamespace("linkET", quietly = TRUE)) {
 ## 代码可用性
 
 > The R code used for the analyses is available at
-> https://github.com/wh20010101/syncom-cyperus-r-code (DOI: `<Zenodo DOI>`).
+> `https://github.com/wh20010101/syncom-cyperus-r-code` (DOI: `<Zenodo DOI>`).
 
 Zenodo 归档完成后，把上面的 `<Zenodo DOI>` 替换为真实 DOI。
 
-## 注意事项
 
-1. **多重检验**：模块 2–4 的相关与网络分析使用 **Raw P**，未做 FDR 校正；模块 5 的共现网络使用 **BH-FDR**（`q < 0.05`）。两者不要混写。
-2. **样本选择与预处理**：以论文 Methods 为准，本 README 不重复描述。
-3. **随机种子**：`random_forest.R` 使用 `set.seed(42)`；`cooccurrence_network.R` 在两组绘图循环前使用 `set.seed(123)`。
-4. **输出目录**：模块 2、3、4 写入 `output/`，模块 5 写入 `output_r/`；目录由脚本自动创建。输出文件不包含在仓库中。
-5. **模块 6**：全模型双因素方差分析、Levene/Shapiro、土壤背景内 Tukey HSD 与 Piepho 字母；输出两个 xlsx，数据不包含在仓库中。
 
 ## 许可
 
 代码采用 MIT License，见 `LICENSE`。本仓库不包含数据，因此不附带数据许可；如果将来添加数据或元数据，请单独补充 CC BY 4.0 / CC0 等数据许可。
 
-## 引用
 
-如果使用本代码，请引用：
-
-> `<论文题目>`. `<作者>`. `<期刊>`, `<年份>`. DOI: `<论文 DOI>`.

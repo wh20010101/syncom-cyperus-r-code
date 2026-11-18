@@ -32,7 +32,7 @@ run_analysis <- function(soil_label, ss_cols, nss_cols) {
   cat(sprintf("\n========== %s ==========\n", soil_label))
 
   # ---- 1. 读取微生物 ----
-  df <- read.delim("../data/微生物OUT.xls", sep = "\t", header = TRUE, check.names = FALSE)
+  df <- read.delim("../data/microbial_OTU_table.xls", sep = "\t", header = TRUE, check.names = FALSE)
   data_cols <- grep("^W[0-9]+_[0-9]+$", names(df), value = TRUE)
   df$genus_clean <- gsub("^g__", "", df$genus)
   genus_abund <- aggregate(df[, data_cols], by = list(genus = df$genus_clean), FUN = sum)
@@ -56,9 +56,9 @@ run_analysis <- function(soil_label, ss_cols, nss_cols) {
 
   # ---- 2. 读取代谢物 (使用已筛选的) ----
   metab_file <- if (soil_label == "SS") {
-    "../代谢物与生理指标相关性网络/代谢物_SS筛选结果.csv"
+    "../02_metabolite_physiology/metabolite_SS.csv"
   } else {
-    "../代谢物与生理指标相关性网络/代谢物_NSS筛选结果.csv"
+    "../02_metabolite_physiology/metabolite_NSS.csv"
   }
   metab_raw <- read.csv(metab_file, header = TRUE, check.names = FALSE)
   rownames(metab_raw) <- metab_raw$Metabolite

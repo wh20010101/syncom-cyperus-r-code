@@ -50,3 +50,13 @@ data/*
 **/output_r/
 **/Mantel_plot*.svg
 **/Mantel_results*.xlsx
+
+# ---- new English data filenames (raw/processed data not public) ----
+**/factorial_traits.xlsx
+**/physiology.xlsx
+**/groups.xlsx
+**/SS_*.xlsx
+**/NSS_*.xlsx
+**/metabolite_SS.csv
+**/metabolite_NSS.csv
+**/microbial_OTU_table.xls

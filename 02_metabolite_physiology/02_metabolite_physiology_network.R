@@ -2,9 +2,9 @@
 # 模块 2：SS / NSS 代谢物—生理指标 Spearman 相关性网络分析
 #
 # 【输入】
-#   代谢物_SS筛选结果.csv、代谢物_NSS筛选结果.csv
+#   metabolite_SS.csv、metabolite_NSS.csv
 #       行 = 代谢物，列 = 注释信息 + 样本丰度（W1_1 … W14_6）
-#   ../组学与生理的相关性分析/灭菌指标.xlsx、非灭菌指标.xlsx
+#   ../01_mantel/SS_physiology.xlsx、NSS_physiology.xlsx
 #       行 = 样本（列名 Sample），列 = 各项生理指标
 #
 # 【输出】写入同目录 output/
@@ -266,11 +266,11 @@ nss_map <- list(CK  = c("W8_1", "W8_2", "W8_3"),  S   = c("W9_1", "W9_2", "W9_3"
                 SC1 = c("W10_1", "W10_2", "W10_3"), SC5 = c("W14_1", "W14_2", "W14_3"))
 
 # 生理指标表来自模块 1 的输出目录，使用相对路径跨目录读取
-phys_ss  <- "../组学与生理的相关性分析/灭菌指标.xlsx"
-phys_nss <- "../组学与生理的相关性分析/非灭菌指标.xlsx"
+phys_ss  <- "../01_mantel/SS_physiology.xlsx"
+phys_nss <- "../01_mantel/NSS_physiology.xlsx"
 
-ss_res  <- run_analysis("代谢物_SS筛选结果.csv",  phys_ss,  "SS",  ss_map)
-nss_res <- run_analysis("代谢物_NSS筛选结果.csv", phys_nss, "NSS", nss_map)
+ss_res  <- run_analysis("metabolite_SS.csv",  phys_ss,  "SS",  ss_map)
+nss_res <- run_analysis("metabolite_NSS.csv", phys_nss, "NSS", nss_map)
 
 cat(sprintf("\nFinal: SS=%d sig, NSS=%d sig\n", ss_res$n_sig, nss_res$n_sig))
 cat("DONE!\n")

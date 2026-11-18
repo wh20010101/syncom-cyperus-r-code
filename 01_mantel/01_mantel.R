@@ -129,11 +129,11 @@ run_mantel <- function(micro_file, metab_file, phys_file, label) {
 # ============================================
 # 灭菌土 (SS)
 # ============================================
-run_mantel("灭菌微生物.xlsx", "灭菌代谢物.xlsx", "灭菌指标.xlsx", "SS")
+run_mantel("SS_microbiome.xlsx", "SS_metabolome.xlsx", "SS_physiology.xlsx", "SS")
 
 # ============================================
 # 非灭菌土 (NSS)
 # ============================================
-run_mantel("非灭菌微生物.xlsx", "非灭菌代谢物.xlsx", "非灭菌指标.xlsx", "NSS")
+run_mantel("NSS_microbiome.xlsx", "NSS_metabolome.xlsx", "NSS_physiology.xlsx", "NSS")
 
 cat("DONE!\n")

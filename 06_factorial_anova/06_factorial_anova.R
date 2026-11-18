@@ -12,9 +12,9 @@
 ##    - 每个土壤背景内 7 个处理的 Tukey HSD
 ##      HSD = q(0.95, k=7, df=28) * sqrt(MSE / n)，n = 3
 ##    - Piepho 插入-吸收法生成显著性字母
-##  输入：优先 ../data/所有数据.xlsx；否则当前目录 所有数据.xlsx
-##  输出：output/1_三效应_F_P_偏eta2_CI.xlsx
-##        output/2_各处理均值与字母.xlsx
+##  输入：优先 ../data/factorial_traits.xlsx；否则当前目录 factorial_traits.xlsx
+##  输出：output/1_ANOVA_effects.xlsx
+##        output/2_treatment_means_letters.xlsx
 ##  依赖：readxl, writexl；car 可选（平衡设计下 Type I/III 等价）
 ###############################################################################
 
@@ -39,17 +39,17 @@ local({
 })
 
 ## ---- 路径 ----
-DATA_XLSX <- if (file.exists("../data/所有数据.xlsx")) {
-  "../data/所有数据.xlsx"
+DATA_XLSX <- if (file.exists("../data/factorial_traits.xlsx")) {
+  "../data/factorial_traits.xlsx"
 } else {
-  "所有数据.xlsx"
+  "factorial_traits.xlsx"
 }
 OUTDIR <- "output"
 dir.create(OUTDIR, showWarnings = FALSE, recursive = TRUE)
 
 if (!file.exists(DATA_XLSX)) {
   stop("Input data not found: ", DATA_XLSX,
-       "\n请把 所有数据.xlsx 放到 ../data/ 或脚本所在目录。")
+       "\n请把 factorial_traits.xlsx 放到 ../data/ 或脚本所在目录。")
 }
 
 ## ---- 读入与清洗 ----
@@ -254,8 +254,8 @@ for (tr in traits) {
 df_res <- do.call(rbind, rows)
 df_let <- do.call(rbind, letters_rows)
 
-f1 <- file.path(OUTDIR, "1_三效应_F_P_偏eta2_CI.xlsx")
-f2 <- file.path(OUTDIR, "2_各处理均值与字母.xlsx")
+f1 <- file.path(OUTDIR, "1_ANOVA_effects.xlsx")
+f2 <- file.path(OUTDIR, "2_treatment_means_letters.xlsx")
 write_xlsx(list("ANOVA" = df_res), f1)
 write_xlsx(list("means_letters" = df_let), f2)
 
