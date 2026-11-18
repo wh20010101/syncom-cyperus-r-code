@@ -114,9 +114,7 @@ if (!requireNamespace("linkET", quietly = TRUE)) {
 ## 代码可用性
 
 > The R code used for the analyses is available at
-> `https://github.com/wh20010101/syncom-cyperus-r-code` (DOI: `<Zenodo DOI>`).
-
-Zenodo 归档完成后，把上面的 `<Zenodo DOI>` 替换为真实 DOI。
+> https://github.com/wh20010101/syncom-cyperus-r-code (DOI: [10.5281/zenodo.24353767](https://doi.org/10.5281/zenodo.24353767)).
 
 
 
