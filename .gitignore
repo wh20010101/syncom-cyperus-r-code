@@ -1,0 +1,52 @@
+# ---- R 专属 ----
+.Rproj.user/
+.Rhistory
+.RData
+.Ruserdata
+.Rapp.history
+
+# renv 本地库（renv.lock 需要提交，library 目录不提交）
+renv/library/
+renv/staging/
+renv/sandbox/
+renv/local/
+renv/cellar/
+renv/lock/
+renv/python/
+renv/python/virtualenvs/
+renv/python/r-reticulate/
+
+# 打包与检查产物
+*.Rcheck/
+*.tar.gz
+
+# ---- 系统 / 编辑器 ----
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+
+# ---- 临时与中间文件 ----
+~$*
+*.tmp
+*.bak
+*_backup.R
+# 留档目录里的旧版脚本仍要保留
+!archive/*
+
+# ---- 原始数据（不公开，勿提交） ----
+data/*
+!data/README.md
+**/所有数据.xlsx
+**/生理指标.xlsx
+**/分组信息.xlsx
+**/灭菌*.xlsx
+**/非灭菌*.xlsx
+**/代谢物_*筛选结果.csv
+
+# ---- 生成结果（不提交） ----
+**/output/
+**/output_r/
+**/Mantel_plot*.svg
+**/Mantel_results*.xlsx
